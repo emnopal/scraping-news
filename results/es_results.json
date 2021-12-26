@@ -1,0 +1,159 @@
+{
+  "took": 4,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 766,
+      "relation": "eq"
+    },
+    "max_score": 1.0,
+    "hits": [
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_1",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/berita/d-5870798/setuju-nu-soal-tanah-pejabat-dibatasi-bpn-itu-masalah-integritas",
+          "title": "Setuju NU soal Tanah Pejabat Dibatasi, BPN: Itu Masalah Integritas",
+          "location": "Jakarta",
+          "author": "Lisye Sri Rahayu - detikNews",
+          "date": "Minggu, 26 Des 2021 07:45 WIB",
+          "content": "Hasil Muktamar ke-34 Nahdlatul Ulama (NU) di Lampung meminta agar pemerintah membuat regulasi yang membatasi kepemilikan tanah bagi pejabat. Kementerian Agraria dan Tata Ruang/Badan Pertanahan Nasional (ATR/BPN) mengatakan persoalan kepemilikan tanah pejabat lebih kepada masalah etika.Pejabat negara itu tidak ada sebuah pun dorongan ataupun stimulan dalam undang-undang yang meminta kepada pejabat negara itu untuk mereka memiliki tanah sebanyak-banyaknya, itu sudah pasti. Di dalam konteks negara Indonesia pejabat itu adalah warga negara maka dia berhak memiliki tanah, jika tidak diberi tanah maka itu adalah pelanggaran terhadap HAM, kata Juru Bicara Kementerian ATR/BPN, Teuku Taufiqulhadi kepada wartawan, Sabtu (25/12/2021).Taufiq mengatakan bahwa pejabat yang memiliki tanah di mana-mana lebih ke masalah etika. Secara prinsip, dia setuju agar pejabat membatasi soal kepemilikan tanah.Persoalan kemudian dia tanah di mana-mana itu adalah menurut saya masalah etika saja, seharusnya tidak boleh begitu pejabat negara. Jadi tidak ada itu adalah dorongan dan tidak ada peraturan yang mengatakan pejabat negara tidak boleh memiliki tanah, sebetulnya itu masalah integritas pribadi. lanjutnya.Hingga saat ini, Taufiq mengatakan tidak ada undang-undang untuk membatasi pejabat memiliki tanah. Akan tetapi, dia setuju dengan imbauan NU agar meminta pejabat membatasi kepemilikan tanah.Tidak ada undang-undang, tidak ada regulasi terhadap hal tersebut. Karena itu sebetulnya itu diimbau kepada pejabat negara jangan memiliki tanah sesuka hatinya. Mentang-mentang pejabat itu tidak boleh ada tanah di mana-mana. Itu harus diimbau oleh organisasi seperti organisasi NU itu bagus, kata Taufiq.Kami justru sangat imbauan organisasi sebesar NU agar pejabat menahan diri. Jangan karena jabatannya kemudian memiliki tanah sesuka hatinya di mana-mana, sambungnya.Lebih lanjut, menurut Taufiq, setiap pejabat telah memiliki pertanggungjawaban atas tanah yang dimilikinya. Hal itu adalah laporan kepada KPK mengenai Laporan Harta Kekayaan Penyelenggara Negara (LHKPB).Sampai sekarang ini tidak ada (regulasi). Itu etika, dan pejabat itu taroklah seorang Dirjen ataupun direktur, itu pasti tidak bisa membeli tanah di mana-mana. Sebetulnya gajinya sudah terukur, kan kemudian sudah ada yang dari KPK itu, LHKPN. Jadi nanti di LHKPN dilihat siapa yang banyak, kan masyarakat harus menghukumnya, tutur dia.Muktamar NU itu juga meminta pemerintah agar melindungi tanah ulayat dari perampasan. Taufiq mengatakan perlindungan terhadap tanah ulayat telah diatur dalam Undang-Undang Cipta kerja.Kedua masalah perlindungan terhadap tanah ulayat. Tanah ulayat itu dengan UU Cipta Kerja itu adalah sepenuhnya untuk melindungi tanah-tanah ulayat. Tanah ulayat itu nanti, misalkan di Bali itu adalah tanah adat. Itu sekarang bisa saja tanah ada itu dijual. Sekarang ini diberikan sebuah hak agar terlindungi tanah adat dengan HPL (Hak Pengelolaan), kata Taufiq.        Selanjutnya Halaman                1                            2            nahdlatul ulama pbn tanah kepemilikan tanah muktamar nu kementerian atr/bpn"
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_2",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/berita/d-5870774/tak-henti-kamrussamad-sentil-sandi-meski-sudah-datangi-prabowo-jalan-kaki",
+          "title": "Tak Henti Kamrussamad Sentil Sandi Meski sudah Datangi Prabowo Jalan Kaki",
+          "location": "Jakarta",
+          "author": "Tim detikcom - detikNews",
+          "date": "Minggu, 26 Des 2021 07:01 WIB",
+          "content": "Politikus Gerindra Sandiaga Uno mengunjungi Prabowo Subianto di kantonya, Kementerian Pertahanan (Kemenhan). Namun, peristiwa itu tetap disentil oleh kawan separtainya, Kamrussamad.Sebelum peristiwa Sandiaga Uno bertemu Prabowo, Kamrussamad menyerang Sandiaga. Penyebanya, deklarasi Sandiaga maju Capres 2024 oleh sejumlah ulama, yang mengatasnamakan Ijtima Ulama. Deklarasi itu diadakan di Bandung dan Jakarta.Upaya rekayasa forum Ijtima Ulama DKI Jakarta (deklarasi bulan Oktober 2021) dan forum Ijtima Ulama Jawa Barat (deklarasi bulan Desember 2021) merupakan tindakan berpotensi menimbulkan politik identitas sebagai pemecah belah bangsa, kata Kamrussamad dalam keterangan tertulis yang berjudul Gerindra: Sesalkan Sandiaga Uno Rekayasa Ijtima Ulama demi Capres, Kamis (16/12/2021).Saya khawatir ada sekelompok oknum yang bekerja secara sistematis bersama Sandiaga sehingga tega lakukan eksploitasi identitas ulama, imbuhnya.Beberapa hari kemudian, Sandiaga menjawab tudingan Kamrussamad. Sandiaga menegaskan bahwa saat ini fokusnya adalah menjalankan tugas dan fungsi sebagai Menteri Pariwisata dan Ekonomi Kreatif (Menparekraf).Tanggapan saya adalah tentunya sekarang saya fokusnya di Parekraf. Nggak kepikiran sama sekali untuk melakukan hal-hal yang lain, ucap Sandiaga melalui video yang diterima detikcom, Minggu (19/12)."
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_3",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/foto-news/d-5870736/ho-ho-ho-santa-bagi-bagi-hadiah-natal-di-jalanan",
+          "title": "",
+          "location": "",
+          "author": "",
+          "date": "",
+          "content": "Banjar - Umat Kristiani membagikan hadiah kepada anak-anak. Kegiatan ini dilakukan saat Natal untuk mempererat hubungan antarumat beragama."
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_4",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/berita-jawa-timur/d-5870684/dinkes-banyuwangi-akan-tertibkan-swab-antigen-tak-berizin-sekitar-ketapang",
+          "title": "Dinkes Banyuwangi Akan Tertibkan Swab Antigen Tak Berizin Sekitar Ketapang",
+          "location": "Banyuwangi",
+          "author": "Ardian Fanani - detikNews",
+          "date": "Minggu, 26 Des 2021 00:04 WIB",
+          "content": "Dinkes Banyuwangi bakal melakukan penertiban layanan swab antigen tak berizin, di sekitar Pelabuhan Ketapang. Berdasarkan regulasi yang ada, mereka semestinya beroperasi di lokasi induk klinik atau laboratorium sesuai izin yang diberikan.Berdasarkan Peraturan Menteri Kesehatan Nomor 114 Tahun 2010, laboratorium atau klinik memang tidak diperkenankan membuat pos pembantu. Sementara layanan rapid tes antigen di sekitar Pelabuhan Ketapang, ternyata izin operasinya berada di Surabaya, Bali dan kota di luar Banyuwangi.Sehingga, meskipun ada beberapa klinik atau laboratorium yang mengajukan rekomendasi ke Dinas Kesehatan Banyuwangi untuk membuka semacam pos pembantu di sekitar Pelabuhan Ketapang, tidak dapat diproses.Pelaksana Tugas Kepala Dinas Kesehatan Banyuwangi, Amir Hidayat mengatakan, saat ini banyak jasa layanan rapid tes antigen di sekitar Pelabuhan Ketapang. Ada cukup banyak, ini sedang kita identifikasi juga karena ada yang kadang nampak, kadang tidak nampak, ada yang musiman juga, pada saat penumpang rame seperti saat ini, jelasnya kepada wartawan, Sabtu (25/12/2021).Keberadaan layanan swab antigen ini, menurutnya, sebenarnya untuk membantu pelayanan antigen bagi calon pengguna jasa Pelabuhan Ketapang. Namun, berdasarkan regulasi yang ada, mereka semestinya beroperasi di lokasi induk klinik atau laboratorium sesuai izin yang diberikan.Izin di induk ini yang dibawa ke sini. Sebenarnya dia ini sah izin di induknya. Yang di sini kita harapkan juga mengajukan izin. Jadi bukan tidak berizin sama sekali, terangnya.Dinas Kesehatan, tambah Amir, akan mengumpulkan semua pemberi layanan swab antigen di sekitar Pelabuhan Ketapang. Baik itu yang berizin maupun yang tidak berizin.Ada dua hal penting yang akan disampaikan pada para pemberi layanan swab antigen tersebut. Pertama, terkait izin. Untuk yang sudah berizin, kata Amir, akan dibina supaya protapnya sesuai dengan standar.Yang tidak berizin kita sampaikan prosedur yang harus dilalui, mengajukan izin mengajukan rekomendasi dan seterusnya, tegasnya.Mengenai perizinan ini, lanjutnya, masih dalam proses pembahasan untuk mencari opsi diskresi, apa yang bisa dilakukan untuk itu. Terkait hal ini, menurutnya, Dinas Kesehatan berencana mengajukan surat pada Kementerian Kesehatan."
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_5",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/detiktv/d-5870817/bibit-siklon-tropis-97s-berpotensi-jadi-siklon-tropis",
+          "title": "",
+          "location": "",
+          "author": "",
+          "date": "",
+          "content": "Prakirawan BMKG melaporkan bibit siklon tropis 97S berpotensi jadi siklon tropis. Simak prakiraan cuaca selengkapnya yang berlaku untuk Minggu, 26 Desember 2021."
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_6",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/berita/d-5870771/hikmah-covid-19-dulu-pramugari-kini-pahlawan-odgj",
+          "title": "Hikmah COVID-19, Dulu Pramugari Kini 'Pahlawan' ODGJ",
+          "location": "Jakarta",
+          "author": "Khairunnisa Adinda Kinanti - detikNews",
+          "date": "Minggu, 26 Des 2021 06:42 WIB",
+          "content": "Pandemi COVID-19 telah membawa perubahan hidup bagi banyak orang, terutama mereka yang bekerja di bisnis penerbangan. Ada yang dirumahkan, terkena pemutusan kerja, atau mutasi kerjaHal kenyataan hidup yang harus diterima Pratiwi Noviyanthi (27). Ketika pandemi tiba, Novi yang sudah bekerja sebagai pramugari di sebuah maskapai penerbangan Indonesia selama 8 tahun itu terpaksa mengambil unpaid leave (cuti di luar tanggungan).Jauh sebelum mengambil cuti di luar tanggungan, Novi sudah seringkali melakukan aksi sosial di luar pekerjaannya. Novi biasanya mengurusi ODGJ (orang dengan gangguan jiwa) yang ia temui.Akhirnya melihat salah satu konten kreator terjun di bidang ODGJ, orang dengan gangguan jiwa, datanglah kita ke Yayasan Mentari Hati di Tasik. Setelah itu terbukalah mata saya untuk benar-benar melihat saudara kita yang membutuhkan bantuan secara support dan secara materi, ujar Novi dalam program Sosok detikcom.Setelah mempertimbangkan masak-masak, Novi pun memutuskan untuk resign dari pekerjaannya sebagai pramugari demi bisa merawat para ODGJ. Ia pun harus rela menjual aset miliknya demi bisa menyembuhkan para ODGJ yang ia rawat.Karena yang saya lakukan benar-benar tergerak dari hati nurani, saya tidak mikirin duniawi. Segala sesuatu yang bisa saya jual, akan saya jual untuk membantu sesama umat manusia. (Yang dijual) mobil. Jadi kalau ngomongin yang dijual, jujur sedih ya. Karena kan sebelum jadi pramugari, saya sudah punya beberapa mobil dan rumah. Dan akhirnya saya jual semuanya untuk pengobatan ODGJ karena biayanya sangat mahal ya, tutur Novi dengan suara lirih.Meski sudah memutuskan fokus untuk merawat ODGJ, keputusan resign tetap membuat Novi merasa sedih. Diakui Novi, berat mengambil keputusan untuk resign, namun dia harus tetap melanjutkan hidup ke depan.Jadi sempat sedih banget, rasanya seperti berat banget. Terbang itu adalah jiwa aku. Karena makan, tidur, ibadah juga di atas, itu semua kita lakukan di penerbangan itu, ujar Novi."
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_7",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/detiktv/d-5870769/year-in-review-2021-adaptasi-kebiasaan-baru-di-masa-pandemi",
+          "title": "",
+          "location": "",
+          "author": "",
+          "date": "",
+          "content": "Pandemi memaksa masyarakat harus merubah kebiasaan yang berbeda sebelum covid-19 melanda. Apa sajakah kebiasaan baru tersebut?"
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_8",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/detiktv/d-5870795/news-of-the-week-formula-e-di-ancol-gus-yahya-jadi-ketum-pbnu",
+          "title": "",
+          "location": "",
+          "author": "",
+          "date": "",
+          "content": "20Detik merangkum kejadian heboh dan menarik dalam sepekan ini. Apa saja, ya? Simak dalam video berikut ini!"
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_9",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/berita/d-5870765/bantahan-ibu-soal-remaja-medan-dipukuli-kader-satgas-pdip-yang-sakit-hati",
+          "title": "Bantahan Ibu soal Remaja Medan Dipukuli Kader Satgas PDIP yang Sakit Hati",
+          "location": "Jakarta",
+          "author": "Tim detikcom - detikNews",
+          "date": "Minggu, 26 Des 2021 06:19 WIB",
+          "content": "Pengemudi mobil, Halpian Sembiring Meliala (45) mengaku memukul dan menendang remaja inisial F (17) di Medan, Sumatera Utara (Sumut) gegara sakit hati soal perkataan kasar. Ibu korban membantah anaknya berkata kasar.Halpian Sembiring Meliala sudah ditetapkan polisi sebagai tersangka dalam kasus ini. Kepada polisi, Helpian menyebut ada kata-kata yang tidak sopan dari korban.Keterangan awal Tersangka bahwa yang bersangkutan motifnya sakit hati karena merasa anak korban ini tidak sopan sama dia kata-katanya, kata Kapolrestabes Medan Kombes Riko Sunarko dalam konferensi pers di medan, Sabtu (25/12/2021).Riko mengatakan video penganiayaan dilakukan oleh seseorang kepada korban pada 16 Desember 2021 sekitar pukul 18.00 WIB di salah satu minimarket di Jalan Pintu Air IV, Kelurahan Kwala Bekala, Medan Johor. Riko menuturkan awalnya korban meminta agar tersangka menggeser kendaraannya namun tak dipenuhi.Keterangan awal Tersangka bahwa yang bersangkutan motifnya sakit hati karena merasa korban ini tidak sopan sama dia kata-katanya, ucap Riko.Helpian juga dihadirkan dalam konferensi pers itu. Dia mengakui awalnya menyenggol motor korban.Waktu saya tiba di Indomaret, saya menyenggol sepeda motor yang saya belum ketahui siapa yang punya, lalu sudah saya berhenti, istri dan anak saya duluan masuk ke dalam Indomaret, kata tersangka saat rilis pers.Lalu Halpian menyebut, saat dirinya keluar dari mobil, anak itu teriak dan meminta agar mobilnya dipinggirkan.Begitu saya keluar, korban, anak tersebut, berteriak kepada saya, Kau pinggirkan mobilmu. Jadi pas saya turun dari mobil. Lalu saya mendekati beliau, Dek yang sopan sikit, saya ini orang tua, anak saya itu lebih dewasa, mobilmu geser. Spontanitas saya emosional. Mohon maaf, (saya) khilaf, ujar Halpian.Simak video Begini Kronologi Kader Satgas PDIP Pukul Remaja di Medan: [Gambas:Video 20detik]        Selanjutnya Halaman                1                            2                            3            round-up biromedan pdip kader satgas pdip medan"
+        }
+      },
+      {
+        "_index": "news",
+        "_type": "_doc",
+        "_id": "news_26122021_10",
+        "_score": 1.0,
+        "_source": {
+          "url": "https://news.detik.com/berita/d-5870759/bmkg-keluarkan-peringatan-dini-ada-potensi-hujan-petir-di-jaksel-jaktim",
+          "title": "BMKG Keluarkan Peringatan Dini, Ada Potensi Hujan Petir di Jaksel-Jaktim",
+          "location": "Jakarta",
+          "author": "Arief Ikhsanudin - detikNews",
+          "date": "Minggu, 26 Des 2021 05:23 WIB",
+          "content": "Badan Meteorologi, Klimatologi, dan Geofisika (BMKG) mengeluarkan prakiraan cuaca untuk wilayah DKI Jakarta hari ini. Ada peringatan dini potensi hujan di Jaksel dan Jaktim.Peringatan dini. Waspada potensi hujan disertai kilat/petir angin kencang di Jaksel dan Jaktim pada siang-sore hari, tulis BMKG dalam situs resminya, Minggu (26/12/2021).Melihat data prakiraan cuaca BMKG, pada pagi hari, hujan ringan akan turun di Jakarta Utara dan Kepulauan Seribu. Sisanya, wilayah DKI Jakarta akan berawan.Pada siang hari, hujan ringan berpindah ke Jakarta Selatan dan Jakarta Timur. Tempat lain di Jakarta akan cerah berawan.Pada malam hari, seluruh wilayah DKI Jakarta akan cerah. Sementara pada dini hari, akan cerah berawan.Suhu di DKI Jakarta akan berkisar di 23 hingga 31 derajat celcius. Sementara kelembapan 70 hingga 100 persen."
+        }
+      }
+    ]
+  }
+}

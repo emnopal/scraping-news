@@ -54,15 +54,32 @@ def add_document(index_name: str, document: Union[str, Dict[str, str]]) -> dict[
     return response_prop
 
 
-# Get Elasticsearch results
-def es_results() -> None:
-    url = 'http://localhost:9200/news/_search?pretty=true'
-    response = requests.get(url)
-    with open("es_results.json", "w") as f:
-        json.dump(response.json(), f)
+# Get all Elasticsearch index records
+def es_results(
+        index_name: str,
+        save_result_as_json: bool = False,
+        data: Union[str, bool, dict] = False
+) -> requests.Response:
+    url = f'http://localhost:9200/{index_name}/_search?pretty=true'
+    if not data:
+        data = {
+            "size": 3,
+            "query": {
+                "match_all": {}
+            }
+        }
+    else:
+        data = data
+    headers = {'Content-Type': 'application/json'}
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    if save_result_as_json:
+        with open("es_records.json", "w") as f:
+            json.dump(response.json(), f)
+    return response.json()
 
 
 if __name__ == '__main__':
+
     create_index('news')
 
     jsons_1 = []
@@ -98,4 +115,40 @@ if __name__ == '__main__':
     data_3 = ''.join(jsons_3)
     add_document('news', data_3)
 
-    es_results()  # success generated > 500 documents
+    # Default search query
+    print(es_results('news'))
+    print("total documents:", es_results('news')['hits']['total']['value'])
+
+    # Searching 10 documents, sorted by default
+    data = {
+        "size": 10,
+        "query": {
+            "match_all": {}
+        }
+    }
+    print(es_results('news', data=data))
+
+    # Searching documents by specific field, for example, url
+    data = {
+        "size": 10,
+        "query": {
+            "match_all": {}
+        },
+        "_source": False,
+        "fields": ["url"]
+    }
+    print(es_results('news', data=data))
+
+    # Searching match documents in specific field, for example, searching word "Komika" in content field
+    data = {
+        "size": 10,
+        "query": {
+            "match": {
+                "content": "Komika"
+            }
+        },
+        "_source": False,
+        "fields": ["content"]
+    }
+    print(es_results('news', data=data))
+
