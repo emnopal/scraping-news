@@ -154,22 +154,22 @@ if __name__ == "__main__":
     # day 1st
     news_content_now = scraping.get_news_content(
         "https://news.detik.com/indeks", is_pagination=True, date_of_news=date)
-    scraping.save_to_json(news_content_now, filename="today_news_content")
+    scraping.save_to_json(news_content_now, filename=f"{date.strftime('%d%m%Y')}")
 
     # day 2nd
-    # news_content_yesterday = scraping.get_news_content(
-    #     "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=1))
-    # scraping.save_to_json(news_content_now, filename="yesterday_news_content")
+    news_content_yesterday = scraping.get_news_content(
+        "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=1))
+    scraping.save_to_json(news_content_yesterday, filename=f"{(date - timedelta(days=1)).strftime('%d%m%Y')}")
 
     # day 3rd
-    # news_content_2days = scraping.get_news_content(
-    #     "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=2))
-    # scraping.save_to_json(news_content_now, filename="two_days_ago_news_content")
+    news_content_2days = scraping.get_news_content(
+        "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=2))
+    scraping.save_to_json(news_content_2days, filename=f"{(date - timedelta(days=2)).strftime('%d%m%Y')}")
 
     # day 4th
     # news_content_3days = scraping.get_news_content(
     #     "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=3))
-    # scraping.save_to_json(news_content_now, filename="three_days_ago_news_content")
+    # scraping.save_to_json(news_content_3days, filename="three_days_ago_news_content")
 
     # day 5th
     # news_content_4days = scraping.get_news_content(
