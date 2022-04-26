@@ -1,28 +1,28 @@
 import os
 
-import requests
 import re
 import json
 import time
 from datetime import datetime, timedelta
-from typing import Union
+from typing import Coroutine, Union
+from aiohttp import ClientSession
+import asyncio
+import sys
 
-
-def get_links_from_detik(
-        date_of_news: Union[datetime, str] = datetime.now(),
-        is_pagination: bool = True
+async def get_links_from_detik(
+    session: ClientSession,
+    date_of_news: Union[datetime, str] = datetime.now(),
+    is_pagination: bool = True,
+    **kwargs
 ) -> list:
-
     news_url_result = []
     pagination_index = 1
-
     if isinstance(date_of_news, datetime):
         date_of_news = date_of_news.strftime("%m/%d/%Y")
-
     find_url_regex = re.compile(r'href=[\'"]?([^\'" >]+)[\'"] class="media__link" onclick=\'_pt\(this, \"news')
-
     while True:
-        news_url = requests.get(f"https://news.detik.com/indeks/{pagination_index}?date={date_of_news}").text
+        news_url_res = await session.request(method='GET', url=f"https://news.detik.com/indeks/{pagination_index}?date={date_of_news}", **kwargs)
+        news_url = await news_url_res.text()
         news_url_list = find_url_regex.findall(news_url)
         if not news_url_list:
             break
@@ -30,71 +30,99 @@ def get_links_from_detik(
         if not is_pagination:
             break
         pagination_index += 1
-
     news_url_result = list(set(news_url_result))
     return news_url_result
 
-
-def get_news_content(
-        url: list
+async def get_news_content(
+    session: ClientSession,
+    url: list,
+    **kwargs
 ) -> dict:
-
     get_text_from_html = re.compile(r"<p>(.+)</p>")
     get_date = re.compile(r'<div class="detail__date">(.+)</div>')
     get_title = re.compile(r'(?s)<h1 class="detail__title">(.+)</h1>')
     get_author = re.compile(r'<div class="detail__author">(.+)</div>')
     get_location = re.compile(r'<strong>([a-zA-Z0-9\s]+)</strong>')
     remove_html_tag = re.compile(r"<.*?>")
-    final_news_content = {}
+    get_news = await session.request(method='GET', url=url, **kwargs)
+    get_news_contents = await get_news.text()
+    parse_news_content = get_text_from_html.findall(get_news_contents)
+    get_date_news = "".join(get_date.findall(get_news_contents)).strip()
+    get_title_news = "".join(get_title.findall(get_news_contents)).strip()
+    get_author_news = "".join(get_author.findall(get_news_contents)).strip()
+    get_location_news = "".join(get_location.findall(get_news_contents)).strip()
+    readable_news_content = "".join([str_element for tuple_element in parse_news_content for str_element in tuple_element])
+    readable_news_content = remove_html_tag.sub(" ", readable_news_content)
+    readable_news_content = readable_news_content.replace('"', "").strip()
 
-    for num, news_url_data in enumerate(url):
-        get_news_contents = requests.get(news_url_data).text
-
-        parse_news_content = get_text_from_html.findall(get_news_contents)
-        get_date_news = "".join(get_date.findall(get_news_contents)).strip()
-        get_title_news = "".join(get_title.findall(get_news_contents)).strip()
-        get_author_news = "".join(get_author.findall(get_news_contents)).strip()
-        get_location_news = "".join(get_location.findall(get_news_contents)).strip()
-
-        readable_news_content = "".join([str_element for tuple_element in parse_news_content
-                                          for str_element in tuple_element])
-        readable_news_content = remove_html_tag.sub(" ", readable_news_content)
-        readable_news_content = readable_news_content.replace('"', "").strip()
-
-        final_news_content[f"news_{num + 1}"] = {
-            "url": news_url_data,
-            "title": get_title_news,
-            "location": get_location_news,
-            "author": get_author_news,
-            "date": get_date_news,
-            "content": readable_news_content
-        }
+    final_news_content = {
+        "url": url,
+        "title": get_title_news,
+        "location": get_location_news,
+        "author": get_author_news,
+        "date": get_date_news,
+        "content": readable_news_content
+    }
 
     return final_news_content
 
-
-def save_to_json(
-        news_content_real: dict, filename="news_content"
+async def save_news_to_json(
+    session: ClientSession,
+    url: str,
+    filename: str,
+    num: Union[str, int, None] = None,
+    **kwargs
 ) -> None:
 
-    with open(f"{os.getcwd()}/results/{filename}.json", "w") as json_file:
-        json.dump(news_content_real, json_file)
-    print("JSON files generated!")
+    news_content = await get_news_content(session, url, **kwargs)
 
+    folder_path = f'{os.getcwd()}/results/'
+    filename_path = f"{folder_path}{filename}.json"
+
+    if not os.path.isdir(folder_path):
+        os.mkdir(folder_path)
+
+    try:
+        with open(filename_path) as r:
+            news_contents = json.load(r)
+    except FileNotFoundError:
+        with open(filename_path, 'w') as r:
+            json.dump({}, r)
+        with open(filename_path) as r:
+            news_contents = json.load(r)
+
+    news_contents.update({
+        f"news_{num}": news_content
+    })
+
+    with open(filename_path, "w") as json_file:
+        json.dump(news_contents, json_file)
+
+async def get_news(
+    filename: str,
+    date_of_news: Union[datetime, str] = datetime.now(),
+    **kwargs
+) -> int:
+    async with ClientSession() as session:
+        urls = await get_links_from_detik(session, date_of_news)
+        tasks = []
+        for num, url in enumerate(urls):
+            print(f"Getting {num+1} news content from {url}")
+            tasks.append(
+                save_news_to_json(session, url, filename, num+1, **kwargs)
+            )
+        await asyncio.gather(*tasks)
+    print(f"Generated JSON Files: {filename}! with {len(urls)} news content")
+    return len(urls)
 
 if __name__ == "__main__":
+    if sys.platform == 'win32':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     start_time = time.time()
     date = datetime.now()
-    today_news = get_links_from_detik(date)
-    yesterday_news = get_links_from_detik(date - timedelta(days=1))
-    two_days_ago_news = get_links_from_detik(date - timedelta(days=2))
-    three_days_ago_news = get_links_from_detik(date - timedelta(days=3))
-    all_news_url = today_news + yesterday_news + two_days_ago_news + three_days_ago_news
-    news_content = get_news_content(all_news_url)
-    save_to_json(news_content)
-    # JSON file generated!
+    length_url = asyncio.run(get_news(f"test{date.strftime('%d%m%Y')}"))
+    print(f"""Total execution time: {(time.time() - start_time) / 60} minute(s) ({time.time() - start_time} s) and get {length_url} news""")
 
-    print(
-        f"""Total execution time: {(time.time() - start_time) / 60} minute(s) 
-        and get {len(all_news_url)} news from detik.com""".strip())
-    # Total execution time: 33.306561779975894 minute(s) and get 1813 news from detik.com
+    # Total execution time: 0.29508498509724934 minute(s) (17.70509910583496 s) and get 182 news
+
+

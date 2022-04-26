@@ -1,12 +1,13 @@
-import json
 import os
+import json
+import sys
 import time
-from datetime import datetime, timedelta
-
-import requests
+import asyncio
+from typing import Union
 from bs4 import BeautifulSoup
 from bs4.element import ResultSet
-from typing import Union
+from aiohttp import ClientSession
+from datetime import datetime, timedelta
 
 
 class Scraping:
@@ -19,40 +20,43 @@ class Scraping:
         total = int(end_time - self.start_time)
         print(f"Time taken: {total} seconds, approximate {total / 60} minutes")
 
-    def __get_html(
+    async def __get_html(
             self,
-            endpoint_url: str
+            session: ClientSession,
+            endpoint_url: str,
+            **kwargs
     ) -> ResultSet:
-
-        res = requests.get(endpoint_url)
-        html = res.content
+        res = await session.request(method='GET', url=endpoint_url, **kwargs)
+        res.raise_for_status()
+        html = await res.text()
         soup = BeautifulSoup(html, "html.parser")
         a_result = soup.findAll("a", class_="media__link")
-
         return a_result
 
-    def __get_next_urls(
-            self,
-            endpoint_url: str
+    async def __get_next_urls(
+        self,
+        session: ClientSession,
+        endpoint_url: str,
+        **kwargs
     ) -> Union[str, None]:
-
-        res = requests.get(endpoint_url)
-        html = res.content
+        res = await session.request(method='GET', url=endpoint_url, **kwargs)
+        res.raise_for_status()
+        html = await res.text()
         soup = BeautifulSoup(html, "html.parser")
         result = soup.find_all("a", class_="pagination__item", href=True)
-
         if result[-1].text == "Next":
             print(f"Getting news url from {result[-1]['href']}")
             return result[-1]["href"]
-
         else:
             return None
 
-    def get_urls(
-            self,
-            endpoint_url: str,
-            is_pagination: bool = False,
-            date_of_news: Union[datetime, str] = datetime.now()
+    async def get_urls(
+        self,
+        session: ClientSession,
+        endpoint_url: str,
+        is_pagination: bool = False,
+        date_of_news: Union[datetime, str] = datetime.now(),
+        **kwargs
     ) -> list:
 
         if isinstance(date_of_news, datetime):
@@ -64,72 +68,117 @@ class Scraping:
         urls_result = []
 
         while True:
-            time.sleep(1)  # server will refuse if too many requests, set a delay to avoid that
-            result = self.__get_html(endpoint_url)
+            # server will refuse if too many requests, set a delay to avoid that
+            await asyncio.sleep(1)
+            result = await self.__get_html(session, endpoint_url, **kwargs)
             if not result:
                 break
             for get_url_result in result:
                 urls_result.append(get_url_result.get("href"))
             if not is_pagination:
                 return list(set(urls_result))
-            endpoint_url = self.__get_next_urls(endpoint_url)
+            endpoint_url = await self.__get_next_urls(session, endpoint_url, **kwargs)
             if not endpoint_url:
                 return list(set(urls_result))
 
         return list(set(urls_result))
 
-    def get_news_content(
-            self,
-            endpoint_url: str,
-            is_pagination: bool = False,
-            date_of_news: Union[datetime, str] = datetime.now()
+    async def get_news_content(
+        self,
+        session: ClientSession,
+        url: str,
+        **kwargs
     ) -> dict:
 
-        news_contents = {}
+        # server will refuse if too many requests, set a delay to avoid that
+        await asyncio.sleep(1)
 
-        for num, url in enumerate(self.get_urls(endpoint_url, is_pagination, date_of_news)):
-            print(f"Getting {num+1} news content from {url}")
-            time.sleep(1)  # server will refuse if too many requests, set a delay to avoid that
-            res = requests.get(url)
-            html = res.content
-            soup = BeautifulSoup(html, "html.parser")
-            content = soup.find_all("p")
-            content_clean = "".join([i.text for i in content]).replace("\n", "").strip()
+        res = await session.request(method='GET', url=url, **kwargs)
+        res.raise_for_status()
+        html = await res.text()
+        soup = BeautifulSoup(html, "html.parser")
+        content = soup.find_all("p")
+        content_clean = "".join(
+            [i.text for i in content]).replace("\n", "").strip()
 
-            try:
-                get_date = soup.find("div", class_="detail__date").text
-                get_title = soup.find("h1", class_="detail__title").text.replace("\n", "").strip()
-                get_author = soup.find("div", class_="detail__author").text
-                get_location = soup.find("strong").text
-            except:
-                get_date = ""
-                get_title = ""
-                get_author = ""
-                get_location = ""
+        try:
+            get_date = soup.find("div", class_="detail__date").text
+            get_title = soup.find(
+                "h1", class_="detail__title").text.replace("\n", "").strip()
+            get_author = soup.find("div", class_="detail__author").text
+            get_location = soup.find("strong").text
+        except:
+            get_date = ""
+            get_title = ""
+            get_author = ""
+            get_location = ""
 
-            news_contents[f"news_{num + 1}"] = {
-                "url": url,
-                "title": get_title,
-                "location": get_location,
-                "author": get_author,
-                "date": get_date,
-                "content": content_clean
-            }
-
-        print(f"{len(news_contents)} news content generated!")
+        news_contents = {
+            "url": url,
+            "title": get_title,
+            "location": get_location,
+            "author": get_author,
+            "date": get_date,
+            "content": content_clean
+        }
 
         return news_contents
 
-    @staticmethod
-    def save_to_json(
-            news_content_real: Union[list, dict],
-            filename="test"
+    async def save_news_to_json(
+        self,
+        session: ClientSession,
+        url: str,
+        filename: str,
+        num: Union[str, int, None] = None,
+        **kwargs
     ) -> None:
 
-        with open(f"{os.getcwd()}/results/{filename}.json", "w") as json_file:
-            json.dump(news_content_real, json_file)
+        news_content = await self.get_news_content(session, url, **kwargs)
 
-        print("JSON files generated!")
+        folder_path = f'{os.getcwd()}/results/'
+        filename_path = f"{folder_path}{filename}.json"
+
+        if not os.path.isdir(folder_path):
+            os.mkdir(folder_path)
+
+        try:
+            with open(filename_path) as r:
+                news_contents = json.load(r)
+        except FileNotFoundError:
+            with open(filename_path, 'w') as r:
+                json.dump({}, r)
+            with open(filename_path) as r:
+                news_contents = json.load(r)
+
+        news_contents.update({
+            f"news_{num}": news_content
+        })
+
+        with open(filename_path, "w") as json_file:
+            json.dump(news_contents, json_file)
+
+    async def get_all_news_data(
+        self,
+        endpoint_url: str,
+        is_pagination: bool = False,
+        date_of_news: Union[datetime, str] = datetime.now(),
+        filename: Union[str, None] = None,
+        **kwargs
+    ) -> None:
+        async with ClientSession() as session:
+            if not filename:
+                filename = str(date_of_news)
+
+            tasks = []
+            urls = await self.get_urls(session, endpoint_url, is_pagination, date_of_news)
+            for num, url in enumerate(urls):
+                print(f"Getting {num+1} news content from {url}")
+                tasks.append(
+                    self.save_news_to_json(
+                        session, url, filename, num+1, **kwargs)
+                )
+            await asyncio.gather(*tasks)
+        print(f"Generated JSON Files: {filename}!")
 
 
 if __name__ == "__main__":
@@ -137,51 +186,29 @@ if __name__ == "__main__":
     scraping = Scraping()
     date = datetime.now()
 
-    # urls = scraping.get_urls("https://news.detik.com/indeks", is_pagination=False)
-    # scraping.save_to_json(urls, filename="no_pagination")
+    if sys.platform == 'win32':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    # urls = scraping.get_urls("https://news.detik.com/indeks", is_pagination=True)
-    # scraping.save_to_json(urls, filename="pagination")
+    # Get 7 Days News
+    for i in range(7):
+        if i == 0:
+            asyncio.run(
+                scraping.get_all_news_data(
+                    "https://news.detik.com/indeks",
+                    is_pagination=True,
+                    date_of_news=date,
+                    filename=date.strftime('%d%m%Y')
+                )
+            )
+        else:
+            asyncio.run(
+                scraping.get_all_news_data(
+                    "https://news.detik.com/indeks",
+                    is_pagination=True,
+                    date_of_news=date - timedelta(days=i),
+                    filename=(date - timedelta(days=i)).strftime('%d%m%Y')
+                )
+            )
 
-    # news_content = scraping.get_news_content("https://news.detik.com/indeks", is_pagination=False)
-    # scraping.save_to_json(news_content, filename="news_content_bs4_no_pagination")
-
-    # Bad idea for getting all the news content for 7 days in one run,
-    # so use one day in one run (until 7x runs) instead
-
-    # Get one week news content
-
-    # day 1st
-    news_content_now = scraping.get_news_content(
-        "https://news.detik.com/indeks", is_pagination=True, date_of_news=date)
-    scraping.save_to_json(news_content_now, filename=f"{date.strftime('%d%m%Y')}")
-
-    # day 2nd
-    news_content_yesterday = scraping.get_news_content(
-        "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=1))
-    scraping.save_to_json(news_content_yesterday, filename=f"{(date - timedelta(days=1)).strftime('%d%m%Y')}")
-
-    # day 3rd
-    news_content_2days = scraping.get_news_content(
-        "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=2))
-    scraping.save_to_json(news_content_2days, filename=f"{(date - timedelta(days=2)).strftime('%d%m%Y')}")
-
-    # day 4th
-    # news_content_3days = scraping.get_news_content(
-    #     "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=3))
-    # scraping.save_to_json(news_content_3days, filename="three_days_ago_news_content")
-
-    # day 5th
-    # news_content_4days = scraping.get_news_content(
-    #     "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=4))
-    # scraping.save_to_json(news_content_now, filename="four_days_ago_news_content")
-
-    # day 6th
-    # news_content_5days = scraping.get_news_content(
-    #     "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=5))
-    # scraping.save_to_json(news_content_now, filename="five_days_ago_news_content")
-
-    # day 7th
-    # news_content_6days = scraping.get_news_content(
-    #     "https://news.detik.com/indeks", is_pagination=True, date_of_news=date - timedelta(days=6))
-    # scraping.save_to_json(news_content_now, filename="six_days_ago_news_content")
+    # Time taken: 572 seconds, approximate 9.533333333333333 minutes
+    # saving almost 2 Hours than previous version (not using asynchronous)
