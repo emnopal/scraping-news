@@ -1,13 +1,13 @@
 import os
 import json
-import sys
 import time
 import asyncio
 from typing import Union
 from bs4 import BeautifulSoup
 from bs4.element import ResultSet
 from aiohttp import ClientSession
-from datetime import datetime, timedelta
+from datetime import datetime
+from pathlib import Path
 
 
 class Scraping:
@@ -135,7 +135,8 @@ class Scraping:
 
         news_content = await self.get_news_content(session, url, **kwargs)
 
-        folder_path = f'{os.getcwd()}/results/'
+        abs_path = Path(__file__).parent.parent
+        folder_path = f'{abs_path}/results/'
         filename_path = f"{folder_path}{filename}.json"
 
         if not os.path.isdir(folder_path):
@@ -180,35 +181,3 @@ class Scraping:
             await asyncio.gather(*tasks)
         print(f"Generated JSON Files: {filename}!")
 
-
-if __name__ == "__main__":
-
-    scraping = Scraping()
-    date = datetime.now()
-
-    if sys.platform == 'win32':
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
-    # Get 7 Days News
-    for i in range(7):
-        if i == 0:
-            asyncio.run(
-                scraping.get_all_news_data(
-                    "https://news.detik.com/indeks",
-                    is_pagination=True,
-                    date_of_news=date,
-                    filename=date.strftime('%d%m%Y')
-                )
-            )
-        else:
-            asyncio.run(
-                scraping.get_all_news_data(
-                    "https://news.detik.com/indeks",
-                    is_pagination=True,
-                    date_of_news=date - timedelta(days=i),
-                    filename=(date - timedelta(days=i)).strftime('%d%m%Y')
-                )
-            )
-
-    # Time taken: 572 seconds, approximate 9.533333333333333 minutes
-    # saving almost 2 Hours than previous version (not using asynchronous)

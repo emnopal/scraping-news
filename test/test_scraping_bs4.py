@@ -1,7 +1,7 @@
 import os
 import json
 import unittest
-from scraping_bs4 import Scraping
+from src.scraping import Scraping
 
 
 class TestScrapingBS4(unittest.TestCase):

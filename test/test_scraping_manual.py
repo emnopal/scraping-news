@@ -1,7 +1,7 @@
 import os
 import json
 import unittest
-from scraping_manual import get_links_from_detik, get_news_content, save_to_json
+from src.manual_scraping import get_links_from_detik, get_news_content, save_to_json
 
 
 class TestScrapingManual(unittest.TestCase):

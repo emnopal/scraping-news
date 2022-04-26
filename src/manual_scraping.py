@@ -1,13 +1,14 @@
 import os
-
 import re
+import sys
 import json
 import time
-from datetime import datetime, timedelta
-from typing import Coroutine, Union
-from aiohttp import ClientSession
 import asyncio
-import sys
+from typing import Union
+from pathlib import Path
+from aiohttp import ClientSession
+from datetime import datetime, timedelta
+
 
 async def get_links_from_detik(
     session: ClientSession,
@@ -15,11 +16,13 @@ async def get_links_from_detik(
     is_pagination: bool = True,
     **kwargs
 ) -> list:
+    await asyncio.sleep(1)
     news_url_result = []
     pagination_index = 1
     if isinstance(date_of_news, datetime):
         date_of_news = date_of_news.strftime("%m/%d/%Y")
-    find_url_regex = re.compile(r'href=[\'"]?([^\'" >]+)[\'"] class="media__link" onclick=\'_pt\(this, \"news')
+    find_url_regex = re.compile(
+        r'href=[\'"]?([^\'" >]+)[\'"] class="media__link" onclick=\'_pt\(this, \"news')
     while True:
         news_url_res = await session.request(method='GET', url=f"https://news.detik.com/indeks/{pagination_index}?date={date_of_news}", **kwargs)
         news_url = await news_url_res.text()
@@ -33,11 +36,13 @@ async def get_links_from_detik(
     news_url_result = list(set(news_url_result))
     return news_url_result
 
+
 async def get_news_content(
     session: ClientSession,
     url: list,
     **kwargs
 ) -> dict:
+    await asyncio.sleep(1)
     get_text_from_html = re.compile(r"<p>(.+)</p>")
     get_date = re.compile(r'<div class="detail__date">(.+)</div>')
     get_title = re.compile(r'(?s)<h1 class="detail__title">(.+)</h1>')
@@ -50,8 +55,10 @@ async def get_news_content(
     get_date_news = "".join(get_date.findall(get_news_contents)).strip()
     get_title_news = "".join(get_title.findall(get_news_contents)).strip()
     get_author_news = "".join(get_author.findall(get_news_contents)).strip()
-    get_location_news = "".join(get_location.findall(get_news_contents)).strip()
-    readable_news_content = "".join([str_element for tuple_element in parse_news_content for str_element in tuple_element])
+    get_location_news = "".join(
+        get_location.findall(get_news_contents)).strip()
+    readable_news_content = "".join(
+        [str_element for tuple_element in parse_news_content for str_element in tuple_element])
     readable_news_content = remove_html_tag.sub(" ", readable_news_content)
     readable_news_content = readable_news_content.replace('"', "").strip()
 
@@ -66,6 +73,7 @@ async def get_news_content(
 
     return final_news_content
 
+
 async def save_news_to_json(
     session: ClientSession,
     url: str,
@@ -76,7 +84,8 @@ async def save_news_to_json(
 
     news_content = await get_news_content(session, url, **kwargs)
 
-    folder_path = f'{os.getcwd()}/results/'
+    abs_path = Path(__file__).parent.parent
+    folder_path = f'{abs_path}/results/'
     filename_path = f"{folder_path}{filename}.json"
 
     if not os.path.isdir(folder_path):
@@ -98,6 +107,7 @@ async def save_news_to_json(
     with open(filename_path, "w") as json_file:
         json.dump(news_contents, json_file)
 
+
 async def get_news(
     filename: str,
     date_of_news: Union[datetime, str] = datetime.now(),
@@ -118,11 +128,4 @@ async def get_news(
 if __name__ == "__main__":
     if sys.platform == 'win32':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    start_time = time.time()
-    date = datetime.now()
-    length_url = asyncio.run(get_news(f"test{date.strftime('%d%m%Y')}"))
-    print(f"""Total execution time: {(time.time() - start_time) / 60} minute(s) ({time.time() - start_time} s) and get {length_url} news""")
-
-    # Total execution time: 0.29508498509724934 minute(s) (17.70509910583496 s) and get 182 news
-
 
